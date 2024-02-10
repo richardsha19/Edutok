@@ -7,7 +7,7 @@ import ScrollingPage from './components/ScrollingPage';
 
 function App() {
   const [responseData, setResponseData] = useState([])
-  const [stage, setStage] = useState([0])
+  const [stage, setStage] = useState([1])
 
   return (
     <div className="App">
