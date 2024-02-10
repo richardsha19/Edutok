@@ -33,7 +33,7 @@ class Text2ImgModel:
     def __init__(
             self,
             model_id_or_path: str,
-            device: str = "xpu",
+            device: str = "cpu",
             torch_dtype: torch.dtype = torch.bfloat16,
             optimize: bool = True,
             enable_scheduler: bool = False,
@@ -185,7 +185,7 @@ class Text2ImgModel:
 
         images = []
         for i in range(num_images):
-            with torch.xpu.amp.autocast(
+            with torch.cpu.amp.autocast(
                     enabled=True if self.data_type != torch.float32 else False,
                     dtype=self.data_type,
             ):

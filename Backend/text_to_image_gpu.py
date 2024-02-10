@@ -57,9 +57,9 @@ def prompt_to_image(prompt_text):
         print(f"Using enhanced prompt: {prompt_text}")
 
     for model_id in model_ids:
-        model_key = (model_id, "xpu") # Changed from xpu
+        model_key = (model_id, "cpu") # Changed from xpu
         if model_key not in model_cache:
-            model_cache[model_key] = Text2ImgModel(model_id, device="xpu") # Changed from xpu
+            model_cache[model_key] = Text2ImgModel(model_id, device="cpu") # Changed from xpu
 
         model = model_cache[model_key]
 
