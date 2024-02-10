@@ -85,7 +85,7 @@ class Text2ImgModel:
         """
 
         print("Loading the model...")
-        model_path = Path(f"/home/common/data/Big_Data/GenAI/{model_id_or_path}")
+        model_path = Path(f"/home/ubuntu/data/Big_Data/GenAI/{model_id_or_path}")
 
         if model_path.exists():
             # print(f"Loading the model from {model_path}...")
