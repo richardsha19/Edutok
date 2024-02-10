@@ -6,14 +6,27 @@ import ScrollingPage from './components/ScrollingPage';
 
 
 function App() {
-  const [responseData, setResponseData] = useState([])
+  const [images, setImages] = useState([])
+  const [sentences, setSentences] = useState([])
   const [stage, setStage] = useState([1])
+
+  useEffect(()=>{
+    // set dummy data
+    setSentences([
+      ["1st reel, 1st sentence", "1st reel, 2nd sentence", "1st reel, 3rd sentence"],
+      ["2nd reel, 1st sentence", "2nd reel, 2nd sentence", "2nd reel, 3rd sentence", "2nd reel, 4th sentence"]
+    ])
+    setImages([
+      ['./reel1img1.png', './reel1img1.png', './reel1img1.png'],
+      ['./reel1img1.png', './reel1img1.png', './reel1img1.png', './reel1img1.png']
+    ])
+  }, [])
 
   return (
     <div className="App">
       {stage == 0 ?
-      (<LandingPage></LandingPage>) : 
-      (<ScrollingPage></ScrollingPage>)}
+      (<LandingPage />) : 
+      (<ScrollingPage images={images} sentences={sentences} />)}
     </div>
   );
 }
