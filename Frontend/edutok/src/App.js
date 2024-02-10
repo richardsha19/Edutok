@@ -8,7 +8,7 @@ import ScrollingPage from './components/ScrollingPage';
 function App() {
   const [images, setImages] = useState([])
   const [sentences, setSentences] = useState([])
-  const [stage, setStage] = useState([1])
+  const [stage, setStage] = useState([0])
 
   useEffect(()=>{
     // set dummy data
