@@ -9,3 +9,5 @@ intel_extension_for_pytorch
 numpy
 PyPDF2
 openai
+PIL
+intel_extension_for_pytorch

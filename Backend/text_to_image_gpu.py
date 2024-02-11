@@ -4,6 +4,7 @@ import time
 import numpy as np
 from Text2ImgModel import Text2ImgModel
 
+model_cache = {}
 
 def prompt_to_image(prompt_arr):
     output_dir = "output"
