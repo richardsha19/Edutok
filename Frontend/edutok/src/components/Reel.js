@@ -10,64 +10,59 @@ const Reel = (props) => {
 	const triggerRef = useRef(null);
 	const isVisible = useIntersection(triggerRef, "0px")
 	const [isDoneSentence, setIsDoneSentence] = useState(false)
-
-
-	useEffect(()=>{
-		setIsDoneSentence(false);
-		startTalking();
-	}, [isDoneSentence])
+	const [imageIndex, setImageIndex] = useState(0)
 
 	useEffect(() => {
 		const u = new SpeechSynthesisUtterance(props.reelData[currSentence][0]);
 		setUtterance(u);
-		synth.speak(u);
-		if (utterance) {
-			synth.speak(utterance);
-		}
-		console.log(utterance)
+		// synth.speak(u);
+		// if (utterance) {
+		// 	synth.speak(utterance);
+		// }
+		// console.log(utterance)
 	}, [])
+
+	const startTalking = async () => {
+		console.log("called!!!!")
+		if (isVisible) {
+			await new Promise(resolve => setTimeout(resolve, 1000));
+			const voices = speechSynthesis.getVoices();
+			const goodVoices = [0, 1, 8, 18, 85, 73, 93]
+			const selectedVoiceIndex = goodVoices[Math.floor(Math.random() * goodVoices.length)]
+			utterance.voice = voices[selectedVoiceIndex]
+			synth.speak(utterance)
+
+			utterance.addEventListener('end', async (event) => {
+				if (currSentence >= props.reelData.length - 1) setCurrSentence(0);
+				else setCurrSentence(currSentence + 1);
+
+				// console.log("the current sentence is " + currSentence)
+				const u = new SpeechSynthesisUtterance(props.reelData[currSentence][0]);
+				setUtterance(u);
+				synth.cancel();
+				startTalking();
+			});
+			// console.log("hi" + props.reelData[0]);
+			props.playNextTrack();
+		} else {
+			synth.cancel();
+			// console.log("bye" + props.reelData[0])
+		}
+	}
 
 	useEffect(()=> {
 		startTalking()
-	}, [isDoneSentence])
-
-	const handleVisibleChange = async () => {
-		if (isVisible) {
-			await new Promise(resolve => setTimeout(resolve, 1000));
-			synth.speak(utterance)
-			synth.addEventListener('end', async () => {
-				isDoneSentence = true;
-				currSentence++;
-				if (currSentence == props.reelData.length()) currSentence = 0;
-				startTalking();
-				console.log('DONE DONE DONE');
-			});
-			console.log("hi" + props.reelData[0]);
-		} else {
-			synth.cancel();
-			console.log("bye" + props.reelData[0])
-		}
-	}
-
-	useEffect(()=> {
-		handleVisibleChange()
 	}, [isVisible])
-
-	const startTalking = () => {
-		// synth.speak(utterance);
-		synth.addEventListener('end', async () => {
-			isDoneSentence = true;
-			currSentence++;
-			if (currSentence == props.reelData.length()) currSentence = 0;
-			startTalking();
-			console.log('DONE DONE DONE');
-		});
-	}
 
 	return (
 		<>
-			<img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" />
-			<div ref={triggerRef} className='absolute bg-opacity-70 bg-black mx-10 p-3 rounded' onClick={()=>{synth.speak(utterance)}}>{props.reelData[currSentence][0]}</div>
+			<div id="imageContainer" className='w-screen h-screen bg-cover bg-center'>
+				<img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" onClick={()=>{startTalking()}}/>
+
+			</div>
+			{/* <img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" onClick={()=>{startTalking()}}/> */}
+
+			<div ref={triggerRef} className='absolute bg-opacity-70 bg-black mx-10 p-3 rounded'>{props.reelData[0][0]}</div>
 		</>
 	)
 }

@@ -7,6 +7,28 @@ const ScrollingPage = (props) => {
     const scrollRef = useRef(null);
     const synth = window.speechSynthesis;
     useScrollSnap({ ref: scrollRef, duration: 2, delay: 0 });
+
+    const audioTracks = [
+        '/local-forecast-elevator.mp3',
+        '/fluffing-a-duck.mp3',
+        '/monkeys-spinning-monkeys.mp3',
+        '/sneaky-snitch.mp3',
+        '/carefree.mp3',
+        '/hall-of-the-mountain-king.mp3',
+        '/cipher.mp3'
+    ]
+
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+
+    const playNextTrack = () => {
+        const nextIndex = (currentTrackIndex + 1) % audioTracks.length;
+        setCurrentTrackIndex(nextIndex);
+    }
+
+    useEffect(()=>{
+        console.log(audioTracks[currentTrackIndex]);
+    }, [currentTrackIndex])
+
     useEffect(() => {
         window.speechSynthesis.cancel();
         const synth = window.speechSynthesis;
@@ -23,15 +45,17 @@ const ScrollingPage = (props) => {
         }
     }, [props.images])
     return (
-        <>
-            <div className="App" ref={scrollRef}>
-                {props.data.map((reelData)=>(
-                    <header className="App-header w-screen h-sreen">
-                        <Reel reelData={reelData}/>
-                    </header>
-                ))}
-        </div>
-        </>
+    <>
+    <div className="App" ref={scrollRef}>
+        <audio autoPlay loop src={audioTracks[currentTrackIndex]}>
+        </audio>
+        {props.data.map((reelData)=>(
+            <header className="App-header w-screen h-sreen">
+                <Reel reelData={reelData} playNextTrack={playNextTrack}/>
+            </header>
+        ))}
+    </div>
+    </>
     )
 }
 
