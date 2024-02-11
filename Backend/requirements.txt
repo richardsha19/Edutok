@@ -5,3 +5,7 @@ transformers==4.32.1
 pillow
 torch==2.2.0
 torchaudio==2.2.0
+intel_extension_for_pytorch
+numpy
+PyPDF2
+openai
