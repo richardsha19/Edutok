@@ -56,7 +56,12 @@ const Reel = (props) => {
 
 	return (
 		<>
-			<img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" onClick={()=>{startTalking()}}/>
+			<div id="imageContainer" className='w-screen h-screen bg-cover bg-center'>
+				<img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" onClick={()=>{startTalking()}}/>
+
+			</div>
+			{/* <img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" onClick={()=>{startTalking()}}/> */}
+
 			<div ref={triggerRef} className='absolute bg-opacity-70 bg-black mx-10 p-3 rounded'>{props.reelData[0][0]}</div>
 		</>
 	)

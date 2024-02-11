@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* h1 {
+    font-family: monospace;
+    font-size: 2.1em;
+    color: #3399FF;
+} */
+
+body {
+overflow-x:hidden;
+}
+
+#imageContainer {
+background-color: #333;
+overflow: hidden;
+}
+
+@keyframes kenburns {
+    0% {
+        transform: scale3d(1, 1, 1) translate3d(0px, 0px, 0px);
+        animation-timing-function: ease-in;
+        opacity: 1;
+    }
+
+    12% {
+        transform: scale3d(1.4, 1.4, 1.4) translate3d(30px, 30px, 0px);
+        animation-timing-function: ease-in;
+        opacity: 1;
+    }
+    25% {
+        transform: scale3d(1, 1, 1) translate3d(0px, 0px, 0px);
+        animation-timing-function: ease-in;
+        opacity: 1;
+    }
+    37% {
+        transform: scale3d(1.4, 1.4, 1.4) translate3d(30px, -30px, 0px);
+        animation-timing-function: ease-in;
+        opacity: 1;
+    }
+    50% {
+      transform: scale3d(1, 1, 1) translate3d(0px, 0px, 0px);
+      animation-timing-function: ease-in;
+      opacity: 1;
+    }
+    62% {
+        transform: scale3d(1.4, 1.4, 1.4) translate3d(-30px, -30px, 0px);
+        animation-timing-function: ease-in;
+        opacity: 1;
+      }
+    75% {
+        transform: scale3d(1, 1, 1) translate3d(0, 0, 0px);
+        animation-timing-function: ease-in;
+        opacity: 1;
+    }
+    87% {
+        transform: scale3d(1.4, 1.4, 1.4) translate3d(-30px, 30px, 0px);
+        animation-timing-function: ease-in;
+        opacity: 1;
+    }
+    100% {
+      transform: scale3d(1, 1, 1) translate3d(0px, 0px, 0px);
+      animation-timing-function: ease-in;
+      opacity: 1;
+    }
+}
+
+#imageContainer img {
+    animation: kenburns 60s infinite;
+}
