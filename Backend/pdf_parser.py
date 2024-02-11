@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import json
   
 # creating a pdf reader object 
-reader = PdfReader('ap-psych.pdf') 
+reader = PdfReader({TEXT_BOOK})
 
 startingPageNo = 87 # TODO: input from the frontend
 endingPageNo = 89 # TODO: input from the frontend

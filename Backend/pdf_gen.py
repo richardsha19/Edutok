@@ -12,7 +12,7 @@ def split_string(input):
     '''
 
     # Test
-    string_txt = "Barack Obama giving his inauguration speech.* The fall of the Berlin Wall.* A depiction of the Industrial Revolution, focusing on its impact on rural communities.* The Battle of Gettysburg from the viewpoint of a Confederate soldier.*"
+    string_txt = { STRING }
 
     # parse json
     special_char = '*'
@@ -70,7 +70,6 @@ def pdf_gen():
     print("========================================================")
     print("\nChatGPT's catchy response:", response.choices[0].message.content)
 
-    model_cache = {}
 
     str_arr = split_string(response.choices[0].message.content)
 

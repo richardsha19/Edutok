@@ -52,9 +52,9 @@ def prompt_to_image(prompt_arr):
         prompt_arr = []
 
     for model_id in model_ids:
-        model_key = (model_id, "cpu") # Changed from xpu
+        model_key = (model_id, "xpu") # Changed from xpu
         if model_key not in model_cache:
-            model_cache[model_key] = Text2ImgModel(model_id, device="cpu") # Changed from xpu
+            model_cache[model_key] = Text2ImgModel(model_id, device="xpu")
 
         model = model_cache[model_key]
 
@@ -74,10 +74,4 @@ def prompt_to_image(prompt_arr):
         except Exception as e:
             print(f"An error occurred: {e}")
 
-
-if __name__ == "__main__":
-    pass
-    # Format: json file with key value pairs, the keys are the page numbers,
-    # prompt = ["Barack Obama giving his inauguration speech", "The fall of the Berlin Wall.",
-    #           "A depiction of the Industrial Revolution, focusing on its impact on rural communities.", "the Battle of Gettysburg from the viewpoint of a Confederate soldier"]
 
