@@ -6,7 +6,7 @@ import Reel from './Reel';
 const ScrollingPage = (props) => {
     const scrollRef = useRef(null);
     const synth = window.speechSynthesis;
-    useScrollSnap({ ref: scrollRef, duration: 5, delay: 0 });
+    useScrollSnap({ ref: scrollRef, duration: 2, delay: 0 });
     useEffect(() => {
         window.speechSynthesis.cancel();
         const synth = window.speechSynthesis;
