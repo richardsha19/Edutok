@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import logo from "./logo.svg";
 import { useIntersection } from '../hooks/useIntersection';
+import Typewriter from 'typewriter-effect'
 
 const Reel = (props) => {
     const [currSentence, setCurrSentence] = useState(0);
@@ -60,8 +61,10 @@ const Reel = (props) => {
 			<div id="imageContainer" className='w-screen h-screen bg-cover bg-center rounded'>
 				<img src = {props.reelData[imageIndex][1]} className="object-fixed w-screen h-screen bg-cover bg-center rounded bg-black" onClick={()=>{startTalking()}}/>
 			</div>
-
-			<div ref={triggerRef} className='absolute bg-opacity-60 bg-black mx-10 p-3 rounded-lg font-ProximaNova'>{props.reelData[0][0]}</div>
+			
+			<div ref={triggerRef} className='absolute bg-opacity-60 bg-black mx-10 p-3 rounded-lg font-ProximaNova'>
+				<Typewriter options={{delay:20}} onInit={(typewriter)=>{typewriter.typeString(props.reelData[0][0])}}></Typewriter>
+			</div>
 		</>
 	)
 }
