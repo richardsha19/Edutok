@@ -46,11 +46,11 @@ const ScrollingPage = (props) => {
     }, [props.images])
     return (
     <>
-    <div className="App" ref={scrollRef}>
+    <div className="App bg-black" ref={scrollRef}>
         <audio autoPlay loop src={audioTracks[currentTrackIndex]}>
         </audio>
         {props.data.map((reelData)=>(
-            <header className="App-header w-screen h-sreen">
+            <header className="App-header w-screen h-sreen my-3 rounded bg-black">
                 <Reel reelData={reelData} playNextTrack={playNextTrack}/>
             </header>
         ))}

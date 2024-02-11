@@ -15,11 +15,6 @@ const Reel = (props) => {
 	useEffect(() => {
 		const u = new SpeechSynthesisUtterance(props.reelData[currSentence][0]);
 		setUtterance(u);
-		// synth.speak(u);
-		// if (utterance) {
-		// 	synth.speak(utterance);
-		// }
-		// console.log(utterance)
 	}, [])
 
 	const startTalking = async () => {
@@ -56,13 +51,11 @@ const Reel = (props) => {
 
 	return (
 		<>
-			<div id="imageContainer" className='w-screen h-screen bg-cover bg-center'>
-				<img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" onClick={()=>{startTalking()}}/>
-
+			<div id="imageContainer" className='w-screen h-screen bg-cover bg-center rounded'>
+				<img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center rounded bg-black" onClick={()=>{startTalking()}}/>
 			</div>
-			{/* <img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" onClick={()=>{startTalking()}}/> */}
 
-			<div ref={triggerRef} className='absolute bg-opacity-70 bg-black mx-10 p-3 rounded'>{props.reelData[0][0]}</div>
+			<div ref={triggerRef} className='absolute bg-opacity-60 bg-black mx-10 p-3 rounded-lg font-ProximaNova'>{props.reelData[0][0]}</div>
 		</>
 	)
 }

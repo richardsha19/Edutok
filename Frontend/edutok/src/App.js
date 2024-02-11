@@ -34,7 +34,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="App bg-black">
       {stage == 0 ?
       (<LandingPage />) : 
       (<ScrollingPage data = {data} />)}
