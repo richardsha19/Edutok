@@ -31,7 +31,7 @@ const Reel = (props) => {
 			utterance.addEventListener('end', async (event) => {
 				if (currSentence >= props.reelData.length - 1) setCurrSentence(0);
 				else setCurrSentence(currSentence + 1);
-				
+
 				// console.log("the current sentence is " + currSentence)
 				const u = new SpeechSynthesisUtterance(props.reelData[currSentence][0]);
 				setUtterance(u);
@@ -39,6 +39,7 @@ const Reel = (props) => {
 				startTalking();
 			});
 			// console.log("hi" + props.reelData[0]);
+			props.playNextTrack();
 		} else {
 			synth.cancel();
 			// console.log("bye" + props.reelData[0])
