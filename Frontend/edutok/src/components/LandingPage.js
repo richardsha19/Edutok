@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import UploadFile from './uploadfile';
-import { initializeApp, firebase } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, ref, set } from "firebase/database";
-import image from './image.png'
+import { getDatabase, ref, set, onValue } from "firebase/database";
+import image from './image.png';
 
 
 
-function LandingPage() {
+function LandingPage(props) {
   const [number, setNumber] = useState(3);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [input1, setInput1] = useState('');
   const [input2, setInput2] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState(null)
   let formData;
   
   const selectedMain = "grow justify-center px-12 py-3 text-xl text-center text-black bg-white rounded-tl rounded-bl border border-r-0 border-black border-solid max-md:px-5"
@@ -29,23 +31,49 @@ function LandingPage() {
     formData.append('file', event.target.files[0]);
     console.log("formdata:")
     console.log(formData)
+    props.setPdfName(event.target.files[0]);
   };
 
   const handleClick = () => {
     setIsButtonClicked(true);
-
-    switch (number) {
-      case 3:
-        setNumber(2);
-        break;
-
-      // default:
-      //   setNumber(3); // Reset to 3 if the current value is not expected
-    }
+    
   };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    const firebaseConfig = {
+      apiKey: "AIzaSyCMpH27r8nISfzVrb7nZaQl2AhRGOZVJyE",
+      authDomain: "edutok-f643f.firebaseapp.com",
+      databaseURL: "https://edutok-f643f-default-rtdb.firebaseio.com",
+      projectId: "edutok-f643f",
+      storageBucket: "edutok-f643f.appspot.com",
+      messagingSenderId: "249466680883",
+      appId: "1:249466680883:web:854cfb9df35a3aff241546",
+      measurementId: "G-7LBSRMMVNS"
+    };
+    // await new Promise(resolve => setTimeout(resolve, 5000));
+
+    try {
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const query = ref(db, "PDFs")
+    return onValue(query, (snapshot) => {
+      const data = snapshot.val();
+      if (snapshot.exists()) {
+        console.log(data)
+        props.setResponse(data);
+      }
+      props.setStage(1);
+      
+    })
+  } catch (error) {
+    console.error(error)
+  }
+  }
 
   const handleInputChange1 = (event) => {
     setInputValue(event.target.value);
+    props.setBeginPage(event.target.value);
     console.log(event.target.value)
   
 
@@ -57,7 +85,8 @@ function LandingPage() {
   
   const handleInputChange2 = (event) => {
     setInputValue(event.target.value);
-    console.log(event.target.value)      
+    console.log(event.target.value)     
+    props.setEndPage(event.target.value);
     
     
     setNumber(0);
@@ -85,11 +114,11 @@ function LandingPage() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+  const db = getDatabase(app);
 
   
   // Concatenate sIndex and eIndex
     const concatIndex = `${input1}__${input2}`;
-    const db = getDatabase();
     const dataRef = ref(db, '/PDFs');
     console.log("hi");
     console.log(dataRef);
@@ -220,8 +249,8 @@ function LandingPage() {
     </div>
     <div className="mt-11 text-3xl text-black max-md:mt-10">
     {number === 0 ? (
-      <button className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-full mt-7 max-md:mt-10" onClick={writeUserData("m-b", "fileName", input1, input2)}>
-        Submit File
+      <button className="bg-green-500 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-full mt-7 max-md:mt-10" onClick={()=>{handleSubmit(); writeUserData("m-b", "fileName", input1, input2)}}>
+        {loading ? "Loading..." : "Submit File"}
       </button>
     ) : (
       <p>steps away from doomscrolling</p>

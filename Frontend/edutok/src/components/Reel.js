@@ -29,8 +29,6 @@ const Reel = (props) => {
 			synth.speak(utterance)
 			
 			utterance.addEventListener('end', async (event) => {
-				if (currSentence >= props.reelData.length - 1) setCurrSentence(0);
-				else setCurrSentence(currSentence + 1);
 
 				// console.log("the current sentence is " + currSentence)
 				const u = new SpeechSynthesisUtterance(props.reelData[currSentence][0]);
@@ -45,7 +43,7 @@ const Reel = (props) => {
 			synth.cancel();
 		}
 	}
-	
+
 	useEffect(()=> {
 		startTalking()
 	}, [isVisible])
@@ -60,7 +58,7 @@ const Reel = (props) => {
 	return (
 		<>
 			<div id="imageContainer" className='w-screen h-screen bg-cover bg-center rounded'>
-				<img src = {props.reelData[imageIndex][1]} className="w-screen h-screen bg-cover bg-center rounded bg-black" onClick={()=>{startTalking()}}/>
+				<img src = {props.reelData[imageIndex][1]} className="object-fixed w-screen h-screen bg-cover bg-center rounded bg-black" onClick={()=>{startTalking()}}/>
 			</div>
 
 			<div ref={triggerRef} className='absolute bg-opacity-60 bg-black mx-10 p-3 rounded-lg font-ProximaNova'>{props.reelData[0][0]}</div>

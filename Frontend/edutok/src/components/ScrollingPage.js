@@ -47,10 +47,9 @@ const ScrollingPage = (props) => {
     return (
     <>
     <div className="App bg-black" ref={scrollRef}>
-        <audio autoPlay loop src={audioTracks[currentTrackIndex]}>
-        </audio>
+        <audio volume={0.1} autoPlay loop src={audioTracks[currentTrackIndex]} absolute controls className="content-center mt-3 mx-auto"></audio>
         {props.data.map((reelData)=>(
-            <header className="App-header w-screen h-sreen my-3 rounded bg-black">
+            <header className="App-header w-screen h-sreen my-3 rounded bg-black-">
                 <Reel reelData={reelData} playNextTrack={playNextTrack}/>
             </header>
         ))}
