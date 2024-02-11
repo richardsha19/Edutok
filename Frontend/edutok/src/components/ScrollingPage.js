@@ -12,7 +12,10 @@ const ScrollingPage = (props) => {
         '/local-forecast-elevator.mp3',
         '/fluffing-a-duck.mp3',
         '/monkeys-spinning-monkeys.mp3',
-        '/sneaky-snitch.mp3'
+        '/sneaky-snitch.mp3',
+        '/carefree.mp3',
+        '/hall-of-the-mountain-king.mp3',
+        '/cipher.mp3'
     ]
 
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
