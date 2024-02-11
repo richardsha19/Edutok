@@ -26,6 +26,10 @@ const Reel = (props) => {
 		console.log("called!!!!")
 		if (isVisible) {
 			await new Promise(resolve => setTimeout(resolve, 1000));
+			const voices = speechSynthesis.getVoices();
+			const goodVoices = [0, 1, 8, 18, 85, 73, 93]
+			const selectedVoiceIndex = goodVoices[Math.floor(Math.random() * goodVoices.length)]
+			utterance.voice = voices[selectedVoiceIndex]
 			synth.speak(utterance)
 
 			utterance.addEventListener('end', async (event) => {
