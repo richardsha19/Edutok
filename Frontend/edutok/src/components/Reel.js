@@ -9,21 +9,18 @@ const Reel = (props) => {
 	const synth = window.speechSynthesis;
 	const triggerRef = useRef(null);
 	const isVisible = useIntersection(triggerRef, "0px")
+	const [isDoneSentence, setIsDoneSentence] = useState(false)
 
-	useEffect(()=> {
-		if (isVisible) {
-			synth.speak(utterance)
-			console.log("hi");
-		}
-	}, [isVisible])
 
 	useEffect(()=>{
-		setCurrSentence(currSentence + 1);
-	}, [synth.speaking])
+		setIsDoneSentence(false);
+		startTalking();
+	}, [isDoneSentence])
 
 	useEffect(() => {
 		const u = new SpeechSynthesisUtterance(props.reelData[currSentence][0]);
 		setUtterance(u);
+		synth.speak(u);
 		if (utterance) {
 			synth.speak(utterance);
 		}
@@ -31,13 +28,46 @@ const Reel = (props) => {
 	}, [])
 
 	useEffect(()=> {
+		startTalking()
+	}, [isDoneSentence])
 
-	})
+	const handleVisibleChange = async () => {
+		if (isVisible) {
+			await new Promise(resolve => setTimeout(resolve, 1000));
+			synth.speak(utterance)
+			synth.addEventListener('end', async () => {
+				isDoneSentence = true;
+				currSentence++;
+				if (currSentence == props.reelData.length()) currSentence = 0;
+				startTalking();
+				console.log('DONE DONE DONE');
+			});
+			console.log("hi" + props.reelData[0]);
+		} else {
+			synth.cancel();
+			console.log("bye" + props.reelData[0])
+		}
+	}
+
+	useEffect(()=> {
+		handleVisibleChange()
+	}, [isVisible])
+
+	const startTalking = () => {
+		// synth.speak(utterance);
+		synth.addEventListener('end', async () => {
+			isDoneSentence = true;
+			currSentence++;
+			if (currSentence == props.reelData.length()) currSentence = 0;
+			startTalking();
+			console.log('DONE DONE DONE');
+		});
+	}
 
 	return (
 		<>
-			<img ref={triggerRef} src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" />
-			<div className='absolute bg-opacity-70 bg-black mx-10 p-3 rounded' onClick={()=>{synth.speak(utterance)}}>{props.reelData[0][0]}</div>
+			<img src = {props.reelData[currSentence][1]} className="w-screen h-screen bg-cover bg-center" />
+			<div ref={triggerRef} className='absolute bg-opacity-70 bg-black mx-10 p-3 rounded' onClick={()=>{synth.speak(utterance)}}>{props.reelData[currSentence][0]}</div>
 		</>
 	)
 }
